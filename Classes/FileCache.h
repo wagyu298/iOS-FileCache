@@ -20,6 +20,7 @@
 
 - (id)objectForKeyedSubscript:(id)key;
 - (void)setObject:(id)object forKeyedSubscript:(id)key;
+- (void)removeObjectForKey:(NSObject <NSCopying> *)aKey;
 
 - (void)removeExpiredCaches;
 

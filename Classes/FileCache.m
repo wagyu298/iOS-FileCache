@@ -1,6 +1,7 @@
 // This is free and unencumbered software released into the public domain.
 // For more information, please refer to <http://unlicense.org/>
 
+#import <UIKit/UIKit.h>
 #import <CommonCrypto/CommonDigest.h>
 #import "FileCache.h"
 
@@ -201,6 +202,22 @@
 - (void)setObject:(id)object forKeyedSubscript:(id)key
 {
     return [self setObject:object forKey:key];
+}
+
+- (void)removeObjectForKey:(NSObject <NSCopying> *)aKey
+{
+    NSString *path = [self pathWithKey:aKey];
+    
+#if FILE_CACHE_DEBUG
+    NSLog(@"Remove cache %@ to %@", aKey, path);
+#endif
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    if (![fileManager removeItemAtPath:path error:&error]) {
+        NSLog(@"Failed to remove cache directory: %@", error);
+        return;
+    }
 }
 
 #pragma mark - Expire cached files
